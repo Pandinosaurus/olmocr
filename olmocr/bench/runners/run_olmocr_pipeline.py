@@ -33,7 +33,7 @@ class Args:
 server_check_lock = asyncio.Lock()
 
 
-async def run_olmocr_pipeline(pdf_path: str, page_num: int = 1) -> Optional[str]:
+async def run_olmocr_pipeline(pdf_path: str, page_num: int = 1, model: str = "allenai/olmOCR-7B-0225-preview") -> Optional[str]:
     """
     Process a single page of a PDF using the official olmocr pipeline's process_page function
 
@@ -52,6 +52,7 @@ async def run_olmocr_pipeline(pdf_path: str, page_num: int = 1) -> Optional[str]
         tracker = WorkerTracker()
 
     args = Args()
+    args.model = model
     semaphore = asyncio.Semaphore(1)
     worker_id = 0  # Using 0 as default worker ID
 
@@ -63,7 +64,7 @@ async def run_olmocr_pipeline(pdf_path: str, page_num: int = 1) -> Optional[str]
             logger.info("Using existing sglang server")
         except Exception:
             logger.info("Starting new sglang server")
-            _server_task = asyncio.create_task(sglang_server_host(args, semaphore))
+            _server_task = asyncio.create_task(sglang_server_host(args.model, args, semaphore))
             await sglang_server_ready()
 
     try:
