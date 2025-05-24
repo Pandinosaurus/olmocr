@@ -5,6 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 # See https://setuptools.pypa.io/en/latest/userguide/quickstart.html for more project configuration options.
 name = "olmocr"
+description = "Fast, efficient, and high quality OCR powered by open visual language models"
 dynamic = ["version"]
 readme = "README.md"
 classifiers = [
@@ -86,12 +87,12 @@ bench = [
     "rapidfuzz",
     "sequence_align",
     "syntok",
+    "openai",
     "google-genai",
     "playwright",
     "mistralai",
     "lxml",
     "flask",
-
 ]
 
 train = [
